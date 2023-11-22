@@ -6,6 +6,12 @@
 
     $loggerName = '';
     $loggerRoll = '';
+    $loggerRegistration = '';
+    $loggerDepartment = '';
+    $loggerSemester = '';
+    $loggerGroup = '';
+    $loggerSession = '';
+    $loggerShift = '';
     $loggerAvatar = '';
     $loggerEmail = '';
     $loggerPhone = '';
@@ -27,6 +33,12 @@
         $row = mysqli_fetch_array($query);
         $loggerName = $row['name'];
         $loggerRoll = $row['roll'];
+        $loggerRegistration = $row['s_registration'];
+        $loggerDepartment = $row['s_department'];
+        $loggerSemester = $row['s_semester'];
+        $loggerGroup = $row['s_group'];
+        $loggerSession = $row['s_session'];
+        $loggerShift = $row['s_shift'];
         $loggerAvatar = $row['avatar'];
         $loggerEmail = $row['email'];
         $loggerPhone = $row['phone'];

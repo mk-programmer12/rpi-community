@@ -3,8 +3,8 @@ require_once("connect.php");
 
 if (isset($_POST['signup'])) {
     if ($_POST['name'] && $_POST['roll'] && $_POST['password']) {
-        $name = ltrim(htmlspecialchars(stripslashes(htmlentities(mysqli_real_escape_string($connect, $_REQUEST['name'])))));
-        $roll = ltrim(htmlspecialchars(stripslashes(htmlentities(mysqli_real_escape_string($connect, $_REQUEST['roll'])))));
+        $name = ltrim(htmlspecialchars(stripslashes(mysqli_real_escape_string($connect, $_REQUEST['name']))));
+        $roll = ltrim(htmlspecialchars(stripslashes(mysqli_real_escape_string($connect, $_REQUEST['roll']))));
         $pwd = ltrim($_REQUEST['password']);
         $password = md5(sha1($pwd));
         $checkUser = mysqli_query($connect, "select * from `student_info` where `roll`='$roll'");
