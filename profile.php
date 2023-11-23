@@ -21,9 +21,6 @@ require_once('header.php');
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit" aria-selected="false" role="tab" tabindex="-1">Edit Profile</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" aria-selected="false" role="tab" tabindex="-1">Settings</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" aria-selected="false" role="tab" tabindex="-1">Change Password</button>
                         </li>
                     </ul>
@@ -293,37 +290,14 @@ require_once('header.php');
                             <!-- End Profile Edit Form -->
                         </div>
 
-                        <div class="tab-pane fade pt-3" id="profile-settings" role="tabpanel">
-                            <!-- Settings Form -->
-                            <form action="include/deactivate_deletion.php" method="post">
-                                <div class="row mb-3">
-                                    <div class="col-md-4 col-lg-4 col-form-label">Account Deactive or Delete</div>
-                                    <div class="col-md-8 col-lg-8">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="Deactivate" name="setting" id="deactivation" required="">
-                                            <label class="form-check-label" for="deactivation">Deactive Account</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="Deleted" name="setting" id="delete" required="">
-                                            <label class="form-check-label" for="delete">Delete Account</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                </div>
-                            </form>
-                            <!-- End settings Form -->
-                        </div>
-
                         <div class="tab-pane fade pt-3" id="profile-change-password" role="tabpanel">
                             <!-- Change Password Form -->
-                            <form action="change_password.php" method="post">
+                            <form action="include/change_password.php" method="post">
 
                                 <div class="row mb-3">
-                                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                    <label for="oldPassword" class="col-md-4 col-lg-3 col-form-label">Old Password</label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="currentPassword" type="password" class="form-control" id="currentPassword" autocomplete="off" required="">
+                                        <input name="oldPassword" type="password" class="form-control" id="oldPassword" autocomplete="off" required="">
                                     </div>
                                 </div>
 
@@ -342,7 +316,7 @@ require_once('header.php');
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                    <button type="submit" class="btn btn-warning">Change Password</button>
                                 </div>
                             </form>
                             <!-- End Change Password Form -->
