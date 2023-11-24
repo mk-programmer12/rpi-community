@@ -13,13 +13,13 @@ require_once('header.php');
         <div class="card-body">
             <ul class="nav nav-tabs nav-tabs-bordered mb-3" role="tablist">
                 <li class="nav-item">
-                    <a href="friends.php" class="nav-link active" aria-selected="true">Friends</a>
+                    <a href="friends.php" class="nav-link" aria-selected="true">Friends</a>
                 </li>
                 <li class="nav-item">
                     <a href="friend-requests.php" class="nav-link">Requests</a>
                 </li>
                 <li class="nav-item">
-                    <a href="send-requests.php" class="nav-link">Send Requests</a>
+                    <a href="send-requests.php" class="nav-link active">Send Requests</a>
                 </li>
                 <li class="nav-item">
                     <a href="find-friends.php" class="nav-link">Find Friends</a>
