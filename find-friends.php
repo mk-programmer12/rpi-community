@@ -48,22 +48,28 @@ require_once('header.php');
                     $finalOrder = $order[0];
 
                     $query = mysqli_query($connect, "SELECT * FROM `student_info` WHERE `permanent_address`='$loggerPresentAddress' || `present_address`='$loggerPermanentAddress' || `gender`='$loggerGender' || `designation`='$loggerDesignation' || `about`='$loggerAbout' || `s_department`='$loggerDepartment' || `s_semester`='$loggerSemester' || `s_group`='$loggerGroup' || `s_session`='$loggerSession' || `s_shift`='$loggerShift' || `avatar`='$loggerAvatar' ORDER BY $finalOrder ASC LIMIT 30");
-                    while ($row = mysqli_fetch_array($query)) { ?>
-                        <tr>
-                            <td class="text-center">
-                                <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                            </td>
-                            <td class="text-center"><?php echo $row['name']; ?></td>
-                            <td><?php echo $row['roll']; ?></td>
-                            <td><?php echo $row['s_department']; ?></td>
-                            <td>
-                                <a class="btn btn-primary btn-sm" href="include/add_friend.php?id=<?php echo $row['id']; ?>">Add friend</a>
-                                <a class="btn btn-danger btn-sm" href="#">Remove</a>
-                            </td>
-                        </tr>
+                    while ($row = mysqli_fetch_array($query)) {
+
+                        // ignore if already friends query
+                        $receiverId = $row['id'];
+                        $checkAlreadyFriend = mysqli_query($connect, "SELECT * FROM `friends` WHERE (`sender_id`='$loggerId' && `receiver_id`='$receiverId') || (`sender_id`='$receiverId' && `receiver_id`='$loggerId')");
+                        if (mysqli_num_rows($checkAlreadyFriend) === 0) { ?>
+                            <tr>
+                                <td class="text-center">
+                                    <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
+                                </td>
+                                <td class="text-center"><?php echo $row['name']; ?></td>
+                                <td><?php echo $row['roll']; ?></td>
+                                <td><?php echo $row['s_department']; ?></td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" href="include/add_friend.php?id=<?php echo $row['id']; ?>">Add friend</a>
+                                    <a class="btn btn-danger btn-sm" href="#">Remove</a>
+                                </td>
+                            </tr>
+                        <?php }
+                        ?>
                     <?php }
                     ?>
-
                 </tbody>
             </table>
         </div>

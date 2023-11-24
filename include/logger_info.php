@@ -4,6 +4,7 @@
         $loggerPassword = $_SESSION['userPassword'];
     }
 
+    $loggerId = '';
     $loggerName = '';
     $loggerRoll = '';
     $loggerRegistration = '';
@@ -31,6 +32,7 @@
     $query = mysqli_query($connect, "select * from `student_info` where `password`='$loggerPassword'");
     if(mysqli_num_rows($query) === 1) {
         $row = mysqli_fetch_array($query);
+        $loggerId = $row['id'];        
         $loggerName = $row['name'];
         $loggerRoll = $row['roll'];
         $loggerRegistration = $row['s_registration'];
