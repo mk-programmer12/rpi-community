@@ -2,7 +2,7 @@
 session_start();
 require_once('include/connect.php');
 require_once('include/logger_info.php');
-$title = "Friends";
+$title = "Find Friends";
 require_once('header.php');
 
 ?>
@@ -16,10 +16,10 @@ require_once('header.php');
                     <a href="friends.php" class="nav-link" aria-selected="true">Friends</a>
                 </li>
                 <li class="nav-item">
-                    <a href="friend-requests.php" class="nav-link">Requests</a>
+                    <a href="friend-requests.php" class="nav-link">Friend Requests</a>
                 </li>
                 <li class="nav-item">
-                    <a href="send-requests.php" class="nav-link active">Send Requests</a>
+                    <a href="send-requests.php" class="nav-link active">Sent Requests</a>
                 </li>
                 <li class="nav-item">
                     <a href="find-friends.php" class="nav-link">Find Friends</a>
@@ -39,54 +39,31 @@ require_once('header.php');
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center">
-                            <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                        </td>
-                        <td class="text-center">Monir Khan</td>
-                        <td>406034</td>
-                        <td>Computer</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="#">Accept</a>
-                            <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                        </td>
-                        <td class="text-center">Monir Khan</td>
-                        <td>406034</td>
-                        <td>Computer</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="#">Accept</a>
-                            <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                        </td>
-                        <td class="text-center">Monir Khan</td>
-                        <td>406034</td>
-                        <td>Computer</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="#">Accept</a>
-                            <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                        </td>
-                        <td class="text-center">Monir Khan</td>
-                        <td>406034</td>
-                        <td>Computer</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="#">Accept</a>
-                            <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                        </td>
-                    </tr>
+                    <?php
+                    // find sent request
+                    $findRequest = mysqli_query($connect, "SELECT * FROM `friends` WHERE `sender_id`='$loggerId' && `status`='pending' ORDER BY id DESC");
+                    if (mysqli_num_rows($findRequest) >= 1) {
+                        while ($row = mysqli_fetch_array($findRequest)) :
+                            // get user info from userInfo function
+                            $getUser = userInfo($connect, $row['receiver_id']);
+                    ?>
+                            <tr>
+                                <td class="text-center">
+                                    <div class="avatar avatar-sm text-center"><img src="uploads/profile_picture/<?php echo $getUser['avatar']; ?>" alt="Profile Image"></div>
+                                </td>
+                                <td class="text-center"><?php echo $getUser['name']; ?></td>
+                                <td><?php echo $getUser['roll']; ?></td>
+                                <td><?php echo $getUser['s_department']; ?></td>
+                                <td>
+                                    <a class="btn btn-warning btn-sm" href="include/cancel_request.php?id=<?php echo $row['id']; ?>">Cancel request</a>
+                                </td>
+                            </tr>
+                    <?php endwhile;
+                    }else { ?>
+                        <tr>
+                            <td colspan="5">No request found!</td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>

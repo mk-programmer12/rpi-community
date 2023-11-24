@@ -16,10 +16,10 @@ require_once('header.php');
                     <a href="friends.php" class="nav-link" aria-selected="true">Friends</a>
                 </li>
                 <li class="nav-item">
-                    <a href="friend-requests.php" class="nav-link active">Requests</a>
+                    <a href="friend-requests.php" class="nav-link active">Friend Requests</a>
                 </li>
                 <li class="nav-item">
-                    <a href="send-requests.php" class="nav-link">Send Requests</a>
+                    <a href="send-requests.php" class="nav-link">Sent Requests</a>
                 </li>
                 <li class="nav-item">
                     <a href="find-friends.php" class="nav-link">Find Friends</a>

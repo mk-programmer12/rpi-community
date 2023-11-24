@@ -16,10 +16,10 @@ require_once('header.php');
                     <a href="friends.php" class="nav-link" aria-selected="true">Friends</a>
                 </li>
                 <li class="nav-item">
-                    <a href="friend-requests.php" class="nav-link">Requests</a>
+                    <a href="friend-requests.php" class="nav-link">Friend Requests</a>
                 </li>
                 <li class="nav-item">
-                    <a href="send-requests.php" class="nav-link">Send Requests</a>
+                    <a href="send-requests.php" class="nav-link">Sent Requests</a>
                 </li>
                 <li class="nav-item">
                     <a href="find-friends.php" class="nav-link active">Find Friends</a>
@@ -53,10 +53,13 @@ require_once('header.php');
                         // ignore if already friends query
                         $receiverId = $row['id'];
                         $checkAlreadyFriend = mysqli_query($connect, "SELECT * FROM `friends` WHERE (`sender_id`='$loggerId' && `receiver_id`='$receiverId') || (`sender_id`='$receiverId' && `receiver_id`='$loggerId')");
+                        if ($loggerId === $receiverId) {
+                            continue;
+                        }
                         if (mysqli_num_rows($checkAlreadyFriend) === 0) { ?>
                             <tr>
                                 <td class="text-center">
-                                    <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
+                                    <div class="avatar avatar-sm text-center"><img src="uploads/profile_picture/<?php echo $row['avatar']; ?>" alt="Profile Image"></div>
                                 </td>
                                 <td class="text-center"><?php echo $row['name']; ?></td>
                                 <td><?php echo $row['roll']; ?></td>

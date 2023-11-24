@@ -10,8 +10,8 @@ if(!empty($_REQUEST['id'])) {
     $checkValidUser = mysqli_query($connect, "SELECT * FROM `student_info` WHERE `id`='$friendId'");
     if(mysqli_num_rows($checkValidUser) === 1) {
 
-        $senderId = $friendId; // friend request sender id
-        $receiverId = $loggerId; // friend request receiver id
+        $receiverId = $friendId; // friend request sender id
+        $senderId = $loggerId; // friend request receiver id
         $sendTime = time(); // send time
         // check already friend query
         $checkAlreadyFriend = mysqli_query($connect, "SELECT * FROM `friends` WHERE (`sender_id`='$senderId' && `receiver_id`='$receiverId') || (`sender_id`='$receiverId' && `receiver_id`='$senderId')");
