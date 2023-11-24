@@ -39,54 +39,40 @@ require_once('header.php');
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center">
-                            <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                        </td>
-                        <td class="text-center">Monir Khan</td>
-                        <td>406034</td>
-                        <td>Computer</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="#">Accept</a>
-                            <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                        </td>
-                        <td class="text-center">Monir Khan</td>
-                        <td>406034</td>
-                        <td>Computer</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="#">Accept</a>
-                            <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                        </td>
-                        <td class="text-center">Monir Khan</td>
-                        <td>406034</td>
-                        <td>Computer</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="#">Accept</a>
-                            <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <div class="avatar avatar-sm text-center"><img src="assets/img/profile-img.jpg" alt="Profile Image"></div>
-                        </td>
-                        <td class="text-center">Monir Khan</td>
-                        <td>406034</td>
-                        <td>Computer</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="#">Accept</a>
-                            <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                        </td>
-                    </tr>
+                    <?php
+                    $friendsQuery = mysqli_query($connect, "SELECT * FROM `friends` WHERE (`sender_id`='$loggerId' || `receiver_id`='$loggerId') && `status`='accepted'");
+                    if (mysqli_num_rows($friendsQuery) >= 1) {
+
+
+                        while ($row = mysqli_fetch_array($friendsQuery)) :
+
+                            if ($loggerId === $row['sender_id']) {
+                                $getUser = userInfo($connect, $row['receiver_id']);
+                            } else {
+                                $getUser = userInfo($connect, $row['sender_id']);
+                            }
+
+                    ?>
+                            <tr>
+                                <td class="text-center">
+                                    <div class="avatar avatar-sm text-center"><img src="uploads/profile_picture/<?php echo $getUser['avatar'] ?>" alt="Profile Image"></div>
+                                </td>
+                                <td><?php echo $getUser['name']; ?></td>
+                                <td><?php echo $getUser['roll']; ?></td>
+                                <td><?php echo $getUser['s_department']; ?></td>
+                                <td>
+                                    <a class="btn btn-info btn-sm" href="friend_profile.php?id=<?php echo $getUser['id']; ?>">Details</a>
+                                    <a return onclick="return confirm('Are you sure? You want to unfriend <?php echo $getUser['name']; ?>.');" class="btn btn-danger btn-sm" href="include/unfriend.php?id=<?php echo $row['id']; ?>">Unfriend</a>
+                                </td>
+                            </tr>
+                        <?php endwhile;
+                    } else { ?>
+                        <tr>
+                            <td colspan="5">You have no friends.</td>
+                        </tr>
+                    <?php } ?>
+
+
                 </tbody>
             </table>
         </div>
