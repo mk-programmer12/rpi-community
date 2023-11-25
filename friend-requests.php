@@ -42,11 +42,14 @@ require_once('header.php');
 
                     <?php
                     // show accepted message
-                    if (!empty($_REQUEST['status'])) :
-                        if ($_REQUEST['status'] == 'accepted') : ?>
+                    if (!empty($_REQUEST['status'])) {
+                        if ($_REQUEST['status'] == 'accepted') { ?>
                             <div class="alert alert-success">Requested Accepted!</div>
-                    <?php endif;
-                    endif;
+                    <?php }
+                        if ($_REQUEST['status'] == 'deleted') { ?>
+                            <div class="alert alert-danger">Requested Deleted!</div>
+                    <?php }
+                    }
                     ?>
 
                     <?php
