@@ -28,11 +28,11 @@ require_once('header.php');
                     <!-- profile tabs description area -->
                     <div class="tab-content pt-2">
                         <div class="tab-pane fade profile-overview active show" id="profile-overview" role="tabpanel">
-                            <img class="rounded-circle mb-2" style="max-width:140px;max-height:140px;background:#f3f3f3" src="assets/img/profile-img.png" alt="Monir">
+                            <img class="rounded-circle mb-2" style="max-width:140px;max-height:140px;background:#f3f3f3" src="uploads/profile_picture/<?php echo $loggerAvatar; ?>" alt="<?php echo $loggerName; ?>">
                             <p class="small fst-italic"><?php echo $loggerAbout; ?></p>
 
                             <h5 class="card-title mb-3">Profile Details</h5>
-                            
+
                             <div class="row pb-20">
                                 <div class="col-lg-3 col-md-4 label">Name</div>
                                 <div class="col-lg-9 col-md-8"><?php echo $loggerName; ?></div>
@@ -129,7 +129,7 @@ require_once('header.php');
                                 <div class="row mb-3">
                                     <div class="col-md-4 col-lg-3 col-form-label">Profile Image</div>
                                     <div class="col-md-8 col-lg-9">
-                                        <img style="max-width:300px;max-height:400px;background:#f3f3f3" src="assets/img/profile-img.png" alt="Monir Khan's Profile Picture">
+                                        <img style="max-width:300px;max-height:400px" src="uploads/profile_picture/<?php echo $loggerAvatar; ?>" alt="<?php echo $loggerName; ?>">
                                         <div class="pt-2">
                                             <label for="profilePicture" class="btn btn-primary btn-sm text-white" title="Upload new profile image"><i class="icofont-upload"></i></label>
                                             <input class="d-none" type="file" name="profilePicture" id="profilePicture">
