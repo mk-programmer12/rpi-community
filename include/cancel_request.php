@@ -14,7 +14,7 @@ if(!empty($_REQUEST['id'])) {
         // cancel request query
         $cancelQuery = mysqli_query($connect, "DELETE FROM `friends` WHERE `id`='$requestId' && `sender_id`='$senderId' && `status`='$status'");
         if($cancelQuery == true) {
-            header('location: ../send-requests.php');
+            header('location: ../send-requests.php?status=canceled');
         }else {
             echo "<script>alert('Something is wrong! Please try again.);window.open('../send-requests.php','_self');</script>";
         }

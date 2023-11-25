@@ -40,6 +40,15 @@ require_once('header.php');
                 </thead>
                 <tbody>
                     <?php
+                    // show canceled message
+                    if (!empty($_REQUEST['status'])) :
+                        if ($_REQUEST['status'] == 'canceled') : ?>
+                            <div class="alert alert-warning">Requested Canceled!</div>
+                    <?php endif;
+                    endif;
+                    ?>
+                    
+                    <?php
                     // find sent request
                     $findRequest = mysqli_query($connect, "SELECT * FROM `friends` WHERE `sender_id`='$loggerId' && `status`='pending' ORDER BY id DESC");
                     if (mysqli_num_rows($findRequest) >= 1) {
@@ -58,8 +67,8 @@ require_once('header.php');
                                     <a class="btn btn-warning btn-sm" href="include/cancel_request.php?id=<?php echo $row['id']; ?>">Cancel request</a>
                                 </td>
                             </tr>
-                    <?php endwhile;
-                    }else { ?>
+                        <?php endwhile;
+                    } else { ?>
                         <tr>
                             <td colspan="5">No request found!</td>
                         </tr>

@@ -39,6 +39,16 @@ require_once('header.php');
                     </tr>
                 </thead>
                 <tbody>
+
+                    <?php
+                    // show accepted message
+                    if (!empty($_REQUEST['status'])) :
+                        if ($_REQUEST['status'] == 'accepted') : ?>
+                            <div class="alert alert-success">Requested Accepted!</div>
+                    <?php endif;
+                    endif;
+                    ?>
+
                     <?php
                     $checkFriendRequests = mysqli_query($connect, "SELECT * FROM `friends` WHERE (`receiver_id`='$loggerId' && `status`='pending')");
                     if (mysqli_num_rows($checkFriendRequests) >= 1) {
