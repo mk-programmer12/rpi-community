@@ -26,6 +26,17 @@ require_once('header.php');
                 </li>
             </ul>
             <!-- friends tab end -->
+            <?php
+            // show canceled message
+            if (!empty($_REQUEST['status'])) {
+                if ($_REQUEST['status'] == 'unfriend') { ?>
+                    <div class="alert alert-info">Unfriend Successful!</div>
+                <?php }
+                if ($_REQUEST['status'] == 'error') { ?>
+                    <div class="alert alert-danger">Something is wrong! Please try again.</div>
+            <?php }
+            }
+            ?>
 
             <!-- friend start -->
             <table class="table table-bordered table-striped table-hover table-responsive-md">
@@ -42,7 +53,6 @@ require_once('header.php');
                     <?php
                     $friendsQuery = mysqli_query($connect, "SELECT * FROM `friends` WHERE (`sender_id`='$loggerId' || `receiver_id`='$loggerId') && `status`='accepted'");
                     if (mysqli_num_rows($friendsQuery) >= 1) {
-
 
                         while ($row = mysqli_fetch_array($friendsQuery)) :
 
@@ -62,7 +72,11 @@ require_once('header.php');
                                 <td><?php echo $getUser['s_department']; ?></td>
                                 <td>
                                     <a class="btn btn-info btn-sm" href="friend_profile.php?id=<?php echo $getUser['id']; ?>">Details</a>
-                                    <a return onclick="return confirm('Are you sure? You want to unfriend <?php echo $getUser['name']; ?>.');" class="btn btn-danger btn-sm" href="include/unfriend.php?id=<?php echo $row['id']; ?>">Unfriend</a>
+                                    <form class="d-inline-block" onsubmit="return confirm('Are you sure? You want to unfriend <?php echo $getUser['name']; ?>.')" action="include/unfriend.php" method="post">
+                                        <input type="hidden" name="rid" value="<?php echo $row['id']; ?>">
+                                        <input type="hidden" name="uid" value="<?php echo $getUser['id']; ?>">
+                                        <button class="btn btn-danger btn-sm" type="submit">Unfriend</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endwhile;
