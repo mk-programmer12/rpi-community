@@ -23,7 +23,11 @@ function auth() {
 		$checkAuth = mysqli_query($connect, "SELECT * FROM `student_info` WHERE `password`='$userPass'");
 		if(mysqli_num_rows($checkAuth) !== 1) {
 			header("location: $siteUrl/login.php");
+		}else {
+			header("location: $siteUrl/login.php");
 		}
+	}else {
+		header("location: $siteUrl/login.php");
 	}
 }
 
