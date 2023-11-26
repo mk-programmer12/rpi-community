@@ -132,9 +132,9 @@ require_once('header.php');
                                         <img style="max-width:300px;max-height:400px" src="uploads/profile_picture/<?php echo $loggerAvatar; ?>" alt="<?php echo $loggerName; ?>">
                                         <div class="pt-2">
                                             <label for="profilePicture" class="btn btn-primary btn-sm text-white" title="Upload new profile image"><i class="icofont-upload"></i></label>
-                                            <input class="d-none" type="file" name="profilePicture" id="profilePicture">
+                                            <input class="d-none" type="file" name="profilePicture" id="profilePicture" required>
                                             <a onclick="return confirm('This action will delete your profile picture.');" href="include/delete_picture.php" class="btn btn-danger btn-sm" title="Remove my profile picture"><i class="icofont-trash"></i></a>
-                                            <button type="submit" class="btn btn-primary btn-sm">Change</button>
+                                            <button title="Recommended file size is 1:1" type="submit" class="btn btn-primary btn-sm">Change</button>
                                         </div>
                                     </div>
                                 </div>
