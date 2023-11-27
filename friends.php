@@ -71,6 +71,7 @@ require_once('header.php');
                                 <td><?php echo $getUser['roll']; ?></td>
                                 <td><?php echo $getUser['s_department']; ?></td>
                                 <td>
+                                    <a class="btn btn-primary btn-sm" href="messages.php?id=<?php echo $getUser['id']; ?>">Message</a>
                                     <a class="btn btn-info btn-sm" href="friend_profile.php?id=<?php echo $getUser['id']; ?>">Details</a>
                                     <form class="d-inline-block" onsubmit="return confirm('Are you sure? You want to unfriend <?php echo $getUser['name']; ?>.')" action="include/unfriend.php" method="post">
                                         <input type="hidden" name="rid" value="<?php echo $row['id']; ?>">

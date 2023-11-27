@@ -2,9 +2,37 @@
 session_start();
 require_once('include/connect.php');
 require_once('include/logger_info.php');
+auth();
 $title = "Messages";
+$friendId = '';
+if (!empty($_REQUEST['id'])) {
+    $friendId = $_REQUEST['id'];
+    if (checkFriendFunction($loggerId, $friendId) === 1) {
+        $getUser = userInfo($connect, $friendId);
+        $title = $getUser['name'] . "'s Message";
+    } else {
+        header("location: messages.php");
+    }
+}
+
 require_once('header.php');
+
+// get friend info
+function friendInfo()
+{
+    if (!empty($_REQUEST['id'])) {
+        global $connect;
+        global $friendId;
+        $fiQuery = mysqli_query($connect, "SELECT * FROM `student_info` WHERE `id`='$friendId'");
+        if (mysqli_num_rows($fiQuery) === 1) {
+            $fiRow = mysqli_fetch_array($fiQuery);
+            return $fiRow;
+        }
+    }
+}
+
 ?>
+
 
 <!-- chat header start -->
 <div class="container-fluid">
@@ -17,19 +45,6 @@ require_once('header.php');
                         <h3 class="mb-0">Chats</h3>
                     </li>
                     <!-- Title -->
-                    <!-- Buttons -->
-                    <li>
-                        <ul class="list-inline">
-                            <!-- Menu Button -->
-                            <li class="list-inline-item">
-                                <button type="button" class="navigation-toggle btn btn-secondary btn-icon d-xl-none">
-                                    <i class="ri-menu-line"></i>
-                                </button>
-                            </li>
-                            <!-- Menu Button -->
-                        </ul>
-                    </li>
-                    <!-- Buttons -->
                 </ul>
             </div>
         </div>
@@ -37,7 +52,7 @@ require_once('header.php');
         <div class="chat-header d-flex align-items-center border-bottom px-2 col-md-8">
             <div class="container-fluid py-3">
                 <div class="row align-items-center g-0">
-                    <div class="col-8 col-sm-5">
+                    <div class="col-8">
                         <div class="d-flex align-items-center">
                             <!-- Close Chat Button -->
                             <div class="d-block d-xl-none me-3">
@@ -46,6 +61,8 @@ require_once('header.php');
                                 </button>
                             </div>
                             <!-- Close Chat Button -->
+                            
+                            <?php if (!empty($friendId)) { ?>
                             <!-- Avatar -->
                             <div class="avatar avatar-online me-3 rounded-circle overflow-hidden">
                                 <img src="assets/img/avatars/avatar-08.png" alt="Avatar">
@@ -53,13 +70,17 @@ require_once('header.php');
                             <!-- Avatar -->
                             <!-- Text -->
                             <div class="flex-grow-1 overflow-hidden">
-                                <h6 class="fw-medium fs-6 mb-0 fs-6 fw-medium">Ariel Martinez</h6>
-                                <p class="fw-medium fs-6 text-success fs-6 mb-0">Available</p>
+                                 
+                                <h6 class="fw-medium fs-6 mb-0 fs-6 fw-medium"><?php echo $getUser['name']; ?></h6>
+                                <p class="fw-medium fs-6 text-success fs-6 mb-0"><?php echo $getUser['online_status']; ?></p>
                             </div>
                             <!-- Text -->
+                            <?php }else { ?>
+                                <h6>Please Select a friend to start conversation.</h6>
+                            <?php } ?>
                         </div>
                     </div>
-                    <div class="col-4 col-sm-7">
+                    <div class="col-4">
                         <ul class="list-inline text-end mb-0">
                             <!-- Dropdown -->
                             <li class="list-inline-item">
@@ -357,110 +378,46 @@ require_once('header.php');
                             </div>
                         </div>
                         <!-- Messages -->
-                        <!-- Scroll Chat to Bottom -->
-                        <div class="js-scroll-to-bottom"></div>
-                        <!-- Scroll Chat to Bottom -->
                     </div>
                     <!-- Chat Content -->
                     <!-- Chat Footer -->
                     <div class="chat-footer d-flex align-items-center border-top px-2">
                         <div class="container-fluid">
-                            <div class="row align-items-center g-4">
-                                <!-- Input -->
-                                <div class="col">
-                                    <div class="input-group">
-                                        <button class="btn btn-white btn-lg border" type="button"><i class="fa-solid fa-paperclip"></i></button>
-                                        <input id="id-18" type="text" class="form-control form-control-lg" placeholder="Type message" aria-label="type message">
+                            <form action="include/send_message.php" method="post">
+                                <div class="row align-items-center g-4">
+                                    <!-- Input -->
+                                    <div class="col">
+                                        <div class="input-group">
+                                            <?php
+                                            if (!empty($friendId)) { ?>
+                                                <input type="hidden" name="friendId" value="<?php echo $friendId; ?>" required>
+                                            <?php }
+                                            ?>
+                                            <button class="btn btn-white btn-lg border" type="button"><i class="fa-solid fa-paperclip"></i></button>
+                                            <input type="text" class="form-control form-control-lg" placeholder="Type message" name="message" autocomplete="off" required>
+                                        </div>
                                     </div>
+                                    <!-- Input -->
+                                    <!-- Button -->
+                                    <div class="col-auto">
+                                        <ul class="list-inline d-flex align-items-center mb-0">
+                                            <li class="list-inline-item">
+                                                <button type="submit" class="btn btn-icon btn-primary btn-lg rounded-circle <?php if (empty($friendId)) {
+                                                                                                                                echo "disabled";
+                                                                                                                            } ?>">
+                                                    <i class="fa-regular fa-paper-plane"></i>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- Button -->
                                 </div>
-                                <!-- Input -->
-                                <!-- Button -->
-                                <div class="col-auto">
-                                    <ul class="list-inline d-flex align-items-center mb-0">
-                                        <li class="list-inline-item">
-                                            <button type="submit" class="btn btn-icon btn-primary btn-lg rounded-circle">
-                                                <i class="fa-regular fa-paper-plane"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Button -->
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <!-- Chat Footer -->
                 </div>
                 <!-- Chat -->
-                <!-- Chat Info -->
-                <div class="chat-info h-100 border-start collapse" id="profile_desc">
-                    <div class="d-flex flex-column h-100">
-                        <!-- Header -->
-                        <div class="chat-info-header d-flex align-items-center border-bottom">
-                            <ul class="d-flex justify-content-between align-items-center list-unstyled w-100 mx-4 mb-0">
-                                <!-- Title -->
-                                <li>
-                                    <h3 class="mb-0">User Profile</h3>
-                                </li>
-                                <!-- Title -->
-                                <!-- Close Button -->
-                                <li>
-                                    <button class="chat-info-close btn btn-icon btn-base px-0" data-bs-toggle="collapse" data-bs-target="#profile_desc" aria-expanded="false">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </button>
-                                </li>
-                                <!-- Close Button -->
-                            </ul>
-                        </div>
-                        <!-- Header -->
-                        <!-- Content -->
-                        <div class="hide-scrollbar h-100">
-                            <!-- User Info -->
-                            <div class="text-center p-4 pt-14">
-                                <!-- Avatar -->
-                                <div class="avatar avatar-xl mb-4">
-                                    <img src="assets/img/avatars/avatar-08.png" alt="Avatar">
-                                </div>
-                                <!-- Avatar -->
-                                <!-- Text -->
-                                <h5>Ariel Martinez</h5>
-                                <!-- Text -->
-                                <!-- Text -->
-                                <p class="text-body-secondary fs-6">UX/UI Design</p>
-                                <!-- Text -->
-                                <!-- Text -->
-                                <div class="text-center">
-                                    <span class="text-body-secondary mb-0">Graphic designer.<br> Working with landing pages and templates.</span>
-                                </div>
-                                <!-- Text -->
-                            </div>
-                            <!-- User Info -->
-                            <!-- About -->
-                            <div class="profile-about" id="pills-about">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item py-4">
-                                        <h6 class="mb-1">Name</h6>
-                                        <p class="fw-medium fs-6 mb-0">Ariel Martinez</p>
-                                    </li>
-                                    <li class="list-group-item py-4">
-                                        <h6 class="mb-1">Email</h6>
-                                        <p class="fw-medium fs-6 mb-0">ariel@gmail.com</p>
-                                    </li>
-                                    <li class="list-group-item py-4">
-                                        <h6 class="mb-1">Phone</h6>
-                                        <p class="fw-medium fs-6 mb-0">646-210-1784</p>
-                                    </li>
-                                    <li class="list-group-item py-4">
-                                        <h6 class="mb-1">Location</h6>
-                                        <p class="fw-medium fs-6 mb-0">New York, USA</p>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- About -->
-                        </div>
-                        <!-- Content -->
-                    </div>
-                </div>
-                <!-- Chat Info -->
             </div>
         </div>
         <!-- Main Content -->
