@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }else {
                 
-                $updateConversion = mysqli_query($connect, "UPDATE `conversion` SET `last_update_date`='$lastUpdateDate' &&`last_update_time`='$lastUpdateTime' WHERE (`sender_id`='$senderId' && `receiver_id`='$receiverId') && (`sender_id`='$receiverId' && `receiver_id`='$senderId')");
+                $updateConversion = mysqli_query($connect, "UPDATE `conversion` SET `last_update_date`='$lastUpdateDate', `last_update_time`='$lastUpdateTime' WHERE (`sender_id`='$senderId' && `receiver_id`='$receiverId') || (`sender_id`='$receiverId' && `receiver_id`='$senderId')");
 
                 $insertMessage = mysqli_query($connect, "INSERT INTO `messages`(`sender_id`,`receiver_id`,`message`,`send_date`,`send_time`) VALUES('$senderId','$receiverId','$message','$lastUpdateDate','$lastUpdateTime')");
 

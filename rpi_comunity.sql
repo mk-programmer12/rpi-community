@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2023 at 07:46 PM
+-- Generation Time: Nov 27, 2023 at 08:12 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `rpi_comunity`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `conversion`
+--
+
+CREATE TABLE `conversion` (
+  `id` int(255) NOT NULL,
+  `sender_id` int(255) NOT NULL,
+  `receiver_id` int(255) NOT NULL,
+  `last_update_date` varchar(255) NOT NULL,
+  `last_update_time` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `conversion`
+--
+
+INSERT INTO `conversion` (`id`, `sender_id`, `receiver_id`, `last_update_date`, `last_update_time`) VALUES
+(1, 1, 6, 'Nov 28, 2023', '1:07 am'),
+(2, 1, 5, 'Nov 27, 2023', '11:57 pm');
 
 -- --------------------------------------------------------
 
@@ -55,6 +77,35 @@ INSERT INTO `friends` (`id`, `sender_id`, `receiver_id`, `status`, `send_date`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(255) NOT NULL,
+  `sender_id` int(255) NOT NULL,
+  `receiver_id` int(255) NOT NULL,
+  `message` text NOT NULL,
+  `send_date` varchar(255) NOT NULL,
+  `send_time` varchar(255) NOT NULL,
+  `time` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `message`, `send_date`, `send_time`, `time`) VALUES
+(1, 1, 6, 'Assalamuallaikum', 'Nov 27, 2023', '11:53 pm', 0),
+(2, 1, 5, 'How are you?', 'Nov 27, 2023', '11:57 pm', 0),
+(3, 1, 5, 'Assalamuallaikum', 'Nov 27, 2023', '11:57 pm', 0),
+(4, 1, 6, 'Hello', 'Nov 28, 2023', '12:16 am', 0),
+(5, 1, 6, 'Hi', 'Nov 28, 2023', '12:18 am', 0),
+(6, 1, 6, 'Check', 'Nov 28, 2023', '12:20 am', 0),
+(7, 6, 1, 'Hi', 'Nov 28, 2023', '1:07 am', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student_info`
 --
 
@@ -81,6 +132,7 @@ CREATE TABLE `student_info` (
   `twitter_link` varchar(255) DEFAULT NULL,
   `instagram_link` varchar(255) DEFAULT NULL,
   `linkedin_link` varchar(255) DEFAULT NULL,
+  `online_status` varchar(255) NOT NULL DEFAULT 'Offline',
   `is_online` tinyint(1) NOT NULL DEFAULT 1,
   `log_out_time` int(11) NOT NULL,
   `account_status` varchar(255) NOT NULL,
@@ -92,23 +144,35 @@ CREATE TABLE `student_info` (
 -- Dumping data for table `student_info`
 --
 
-INSERT INTO `student_info` (`id`, `name`, `roll`, `s_registration`, `password`, `avatar`, `email`, `phone`, `s_department`, `s_semester`, `s_group`, `s_session`, `s_shift`, `about`, `designation`, `gender`, `present_address`, `permanent_address`, `fb_link`, `twitter_link`, `instagram_link`, `linkedin_link`, `is_online`, `log_out_time`, `account_status`, `created_at`, `updated_at`) VALUES
-(1, 'Monir Khan', 406034, 1502041792, '374daeb43cf29cf49a6e042b12f34f4c', '656391fb0df84.png', 'mdmonirbdrangpur@gmail.com', '01772883484', 'Computer', '8th', 'B', '19-20', '2nd', 'I&#039;m Monir Khan. I am a full stack web developer', 'Web Developer', 'Male', 'Mahadebpur, Rangpur', 'Mahadebpur, Rangpur', 'http://www.facebook.com/mdmonirbdrangpur', '#', '#', '#', 1, 0, '', '2023-11-18 18:16:13', '2023-11-18 18:16:13'),
-(2, 'Demo Name', 100000, 1502041700, '6c3d1d07e23fb1be21691ea0682b3d11', 'default.png', 'demo@gmail.com', '01700000000', 'Civil', '1th', 'A', '20-21', '1st', 'Demo About', 'Demo Designation', 'Male', '', '', '', '', '', '', 1, 0, '', '2023-11-24 13:43:33', '2023-11-24 13:43:33'),
-(3, 'Demo Name2', 100001, NULL, '1a51eda7d7942c31f03cb8420c979eef', 'default.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, 1, 0, '', '2023-11-24 13:44:12', '2023-11-24 13:44:12'),
-(4, 'Abc def', 100002, 0, 'c49738d90551ecf208d9d53cefbb655f', 'default.png', 'marketer@gmail.com', '01710000000', 'Power', '3rd', 'C', '21-22', '1st', 'Hello, I&#039;m Digital marketing expert.', 'Digital Marketer', 'Male', '', '', '', '', '', '', 1, 0, '', '2023-11-24 13:44:26', '2023-11-24 13:44:26'),
-(5, 'Ashik Hasan', 100003, 0, 'bd97dbaebdd4a4497c65b2614d443c76', 'default.png', 'ashik@gmail.com', '01912345678', 'Computer', '8th', 'B', '19-20', '2nd', 'Hi! I&#039;m Web Designer.', 'Web Designer', 'Male', '', '', '', '', '', '', 1, 0, '', '2023-11-24 13:45:05', '2023-11-24 13:45:05'),
-(6, 'MD. Tamim', 100004, 1502041704, 'c7e0985d03714d4cad667f8b46182ca1', 'default.png', 'tamim@gmail.com', '01812345678', 'Computer', '8th', 'B', '19-20', '2nd', 'About me.', 'Lead Genaration', 'Male', '', '', '', '', '', '', 1, 0, '', '2023-11-24 17:08:43', '2023-11-24 17:08:43'),
-(7, 'Galib Hasam', 100006, NULL, '773a8e3072e2495efbdb05b3e04ce0be', 'default.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '', '2023-11-24 17:55:41', '2023-11-24 17:55:41');
+INSERT INTO `student_info` (`id`, `name`, `roll`, `s_registration`, `password`, `avatar`, `email`, `phone`, `s_department`, `s_semester`, `s_group`, `s_session`, `s_shift`, `about`, `designation`, `gender`, `present_address`, `permanent_address`, `fb_link`, `twitter_link`, `instagram_link`, `linkedin_link`, `online_status`, `is_online`, `log_out_time`, `account_status`, `created_at`, `updated_at`) VALUES
+(1, 'Monir Khan', 406034, 1502041792, '374daeb43cf29cf49a6e042b12f34f4c', '656391fb0df84.png', 'mdmonirbdrangpur@gmail.com', '01772883484', 'Computer', '8th', 'B', '19-20', '2nd', 'I&#039;m Monir Khan. I am a full stack web developer', 'Web Developer', 'Male', 'Mahadebpur, Rangpur', 'Mahadebpur, Rangpur', 'http://www.facebook.com/mdmonirbdrangpur', '#', '#', '#', 'Offline', 1, 0, '', '2023-11-18 18:16:13', '2023-11-18 18:16:13'),
+(2, 'Demo Name', 100000, 1502041700, '6c3d1d07e23fb1be21691ea0682b3d11', 'default.png', 'demo@gmail.com', '01700000000', 'Civil', '1th', 'A', '20-21', '1st', 'Demo About', 'Demo Designation', 'Male', '', '', '', '', '', '', 'Offline', 1, 0, '', '2023-11-24 13:43:33', '2023-11-24 13:43:33'),
+(3, 'Demo Name2', 100001, NULL, '1a51eda7d7942c31f03cb8420c979eef', 'default.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, 'Offline', 1, 0, '', '2023-11-24 13:44:12', '2023-11-24 13:44:12'),
+(4, 'Abc def', 100002, 0, 'c49738d90551ecf208d9d53cefbb655f', 'default.png', 'marketer@gmail.com', '01710000000', 'Power', '3rd', 'C', '21-22', '1st', 'Hello, I&#039;m Digital marketing expert.', 'Digital Marketer', 'Male', '', '', '', '', '', '', 'Offline', 1, 0, '', '2023-11-24 13:44:26', '2023-11-24 13:44:26'),
+(5, 'Ashik Hasan', 100003, 0, 'bd97dbaebdd4a4497c65b2614d443c76', 'default.png', 'ashik@gmail.com', '01912345678', 'Computer', '8th', 'B', '19-20', '2nd', 'Hi! I&#039;m Web Designer.', 'Web Designer', 'Male', '', '', '', '', '', '', 'Offline', 1, 0, '', '2023-11-24 13:45:05', '2023-11-24 13:45:05'),
+(6, 'MD. Tamim', 100004, 1502041704, 'c7e0985d03714d4cad667f8b46182ca1', 'default.png', 'tamim@gmail.com', '01812345678', 'Computer', '8th', 'B', '19-20', '2nd', 'About me.', 'Lead Genaration', 'Male', '', '', '', '', '', '', 'Offline', 1, 0, '', '2023-11-24 17:08:43', '2023-11-24 17:08:43'),
+(7, 'Galib Hasam', 100006, NULL, '773a8e3072e2495efbdb05b3e04ce0be', 'default.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Offline', 1, 0, '', '2023-11-24 17:55:41', '2023-11-24 17:55:41');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `conversion`
+--
+ALTER TABLE `conversion`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `friends`
 --
 ALTER TABLE `friends`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -122,10 +186,22 @@ ALTER TABLE `student_info`
 --
 
 --
+-- AUTO_INCREMENT for table `conversion`
+--
+ALTER TABLE `conversion`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `friends`
 --
 ALTER TABLE `friends`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `student_info`

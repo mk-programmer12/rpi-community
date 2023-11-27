@@ -61,21 +61,21 @@ function friendInfo()
                                 </button>
                             </div>
                             <!-- Close Chat Button -->
-                            
+
                             <?php if (!empty($friendId)) { ?>
-                            <!-- Avatar -->
-                            <div class="avatar avatar-online me-3 rounded-circle overflow-hidden">
-                                <img src="assets/img/avatars/avatar-08.png" alt="Avatar">
-                            </div>
-                            <!-- Avatar -->
-                            <!-- Text -->
-                            <div class="flex-grow-1 overflow-hidden">
-                                 
-                                <h6 class="fw-medium fs-6 mb-0 fs-6 fw-medium"><?php echo $getUser['name']; ?></h6>
-                                <p class="fw-medium fs-6 text-success fs-6 mb-0"><?php echo $getUser['online_status']; ?></p>
-                            </div>
-                            <!-- Text -->
-                            <?php }else { ?>
+                                <!-- Avatar -->
+                                <div class="avatar avatar-online me-3 rounded-circle overflow-hidden">
+                                    <img src="uploads/profile_picture/<?php echo $getUser['avatar']; ?>" alt="<?php echo $getUser['name']; ?>">
+                                </div>
+                                <!-- Avatar -->
+                                <!-- Text -->
+                                <div class="flex-grow-1 overflow-hidden">
+
+                                    <h6 class="fw-medium fs-6 mb-0 fs-6 fw-medium"><?php echo $getUser['name']; ?></h6>
+                                    <p class="fw-medium fs-6 text-success fs-6 mb-0"><?php echo $getUser['online_status']; ?></p>
+                                </div>
+                                <!-- Text -->
+                            <?php } else { ?>
                                 <h6>Please Select a friend to start conversation.</h6>
                             <?php } ?>
                         </div>
@@ -138,58 +138,68 @@ function friendInfo()
                             <!-- Direct Chats Tab -->
                             <div class="chat-left" id="direct-tab" role="tabpanel">
                                 <ul class="list-unstyled js-contact-list mb-0">
-                                    <!-- Chat Link 1 -->
-                                    <li class="card contact-item active mb-3">
-                                        <a href="index.html" class="contact-link"></a>
-                                        <div class="card-body">
-                                            <div class="d-flex align-items-center">
-                                                <!-- Avatar -->
-                                                <div class="avatar avatar-sm me-4">
-                                                    <img src="assets/img/avatars/avatar-06.png" alt="Avatar">
-                                                </div>
-                                                <!-- Avatar -->
-                                                <!-- Content -->
-                                                <div class="flex-grow-1 overflow-hidden">
-                                                    <div class="d-flex align-items-center mb-1">
-                                                        <h5 class="fw-medium fs-6 mb-0 me-auto">Ariel Martinez</h5>
-                                                        <p class="small text-body-secondary text-nowrap ms-4 mb-0">8:12 AM</p>
-                                                    </div>
+
+                                    <?php
+                                    // check conversion
+                                    $getConversion = mysqli_query($connect, "SELECT * FROM `conversion` WHERE `sender_id`='$loggerId' || `receiver_id`='$loggerId' ORDER BY `last_update_time` DESC");
+
+                                    if (mysqli_num_rows($getConversion) >= 1) {
+                                        while ($gcRow = mysqli_fetch_array($getConversion)) :
+                                            if ($loggerId === $gcRow['sender_id']) {
+                                                $oppId = $gcRow['receiver_id'];
+                                            } else {
+                                                $oppId = $gcRow['sender_id'];
+                                            }
+
+                                            $friendInfo = userInfo($connect, $oppId);
+
+
+                                    ?>
+
+                                            <!-- Chat Link 1 -->
+                                            <li class="card contact-item mb-3 <?php if ($friendId === $oppId) {
+                                                                                    echo 'active';
+                                                                                } ?>">
+                                                <a href="index.html" class="contact-link"></a>
+                                                <div class="card-body">
                                                     <div class="d-flex align-items-center">
-                                                        <div class="small me-auto">Yes, I want to participate in the project. </div>
-                                                        <span class="badge rounded-pill bg-primary ms-2">2</span>
+                                                        <!-- Avatar -->
+                                                        <div class="avatar avatar-sm me-4">
+                                                            <img src="uploads/profile_picture/<?php echo $friendInfo['avatar']; ?>" alt="<?php echo $friendInfo['name']; ?>">
+                                                        </div>
+                                                        <!-- Avatar -->
+                                                        <!-- Content -->
+                                                        <div class="flex-grow-1 overflow-hidden">
+                                                            <div class="d-flex align-items-center mb-1">
+                                                                <h5 class="fw-medium fs-6 mb-0 me-auto"><a class="fw-medium fs-6" href="messages.php?id=<?php echo $friendInfo['id']; ?>"><?php echo $friendInfo['name']; ?></a></h5>
+                                                                <p class="small text-body-secondary text-nowrap ms-4 mb-0"><?php echo $gcRow['last_update_time']; ?></p>
+                                                            </div>
+                                                            <div class="d-flex align-items-center">
+                                                                <?php
+                                                                $getLastMessageQuery = mysqli_query($connect, "SELECT * FROM `messages` WHERE (`sender_id`='$loggerId' && `receiver_id`='$oppId') || (`sender_id`='$oppId' && `receiver_id`='$loggerId') ORDER BY `id` DESC LIMIT 1");
+                                                                $lmRow = mysqli_fetch_array($getLastMessageQuery);
+                                                                ?>
+                                                                <div class="small me-auto"><?php echo $lmRow['message']; ?> </div>
+                                                                <span class="badge rounded-pill bg-primary ms-2">0</span>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Content -->
                                                     </div>
                                                 </div>
-                                                <!-- Content -->
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!-- Chat Link 1 -->
-                                    <!-- Chat Link 2 -->
-                                    <li class="card contact-item mb-3">
-                                        <a href="#" class="contact-link"></a>
-                                        <div class="card-body">
-                                            <div class="d-flex align-items-center">
-                                                <!-- Avatar -->
-                                                <div class="avatar avatar-sm me-4">
-                                                    <img src="assets/img/avatars/avatar-07.png" alt="Avatar">
-                                                </div>
-                                                <!-- Avatar -->
-                                                <!-- Content -->
-                                                <div class="flex-grow-1 overflow-hidden">
-                                                    <div class="d-flex align-items-center mb-1">
-                                                        <h5 class="fw-medium fs-6 mb-0 me-auto">Chris Solomon</h5>
-                                                        <p class="small text-body-secondary text-nowrap ms-4 mb-0">9:36 AM</p>
-                                                    </div>
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="small me-auto">Okay, I'll try to help.</div>
-                                                        <span class="badge rounded-pill bg-primary ms-2">2</span>
-                                                    </div>
-                                                </div>
-                                                <!-- Content -->
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <!-- Chat Link 2 -->
+                                            </li>
+                                            <!-- Chat Link 1 -->
+
+
+                                    <?php endwhile;
+                                    }
+
+                                    ?>
+
+
+
+
+
+
                                 </ul>
                             </div>
                             <!-- Direct Chats Tab -->
@@ -209,61 +219,56 @@ function friendInfo()
                     <!-- Chat Content -->
                     <div class="chat-content scrollbar-custom">
                         <!-- Messages -->
-                        <div class="message_wrapper">
-                            <div class="d-flex flex-column-reverse">
-                                <!-- Message 1 -->
-                                <div class="message">
-                                    <div class="message-wrap">
-                                        <div class="message-item">
-                                            <div class="message-content">
-                                                <span>Hi John, please take a look at the result of my work, this is a project that I am currently working on.</span>
+                        <div class="message_wrapper h-100">
+                            <div class="d-flex flex-column-reverse h-100 overflow-y-auto">
+
+                                <?php
+                                $getMessages = mysqli_query($connect, "SELECT * FROM `messages` WHERE (`sender_id`='$loggerId' && `receiver_id`='$friendId') || (`sender_id`='$friendId' && `receiver_id`='$loggerId') ORDER BY `id` DESC");
+
+                                if (mysqli_num_rows($getMessages) >= 1) {
+                                    while ($messageRow = mysqli_fetch_array($getMessages)) : 
+                                        $bothInfo = userInfo($connect, $messageRow['sender_id']);
+                                    ?>
+                                        
+                                        <!-- Message 2 -->
+                                        <div class="message mt-4 <?php if($messageRow['sender_id'] === $loggerId) {echo "self"; } ?>">
+                                            <div class="message-wrap">
+                                                <!-- <div class="message-item">
+                                                    <div class="message-content">
+                                                        <span>Hi Ariel, it looks great except for a few things.</span>
+                                                    </div>
+                                                </div> -->
+                                                <div class="message-item">
+                                                    <div class="message-content">
+                                                        <span><?php echo $messageRow['message']; ?></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="message-info">
+                                                <div class="avatar avatar-sm">
+                                                    <img src="uploads/profile_picture/<?php echo $bothInfo['avatar']; ?>" alt="<?php echo $bothInfo['name']; ?>">
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0 fs-6 fw-medium"><?php echo $bothInfo['name']; ?></h6>
+                                                    <small class="text-body-secondary"><?php echo $messageRow['send_date']; ?> <i class="fa-solid fa-check-double"></i>
+                                                    </small>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="message-info">
-                                        <div class="avatar avatar-sm">
-                                            <img src="assets/img/avatars/avatar-08.png" alt="Avatar">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-0">Ariel Martinez</h6>
-                                            <small class="text-body-secondary">9:15 PM <i class="fa-solid fa-check-double"></i></small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Message 1 -->
-                                <!-- Message 2 -->
-                                <div class="message self">
-                                    <div class="message-wrap">
-                                        <div class="message-item">
-                                            <div class="message-content">
-                                                <span>Hi Ariel, it looks great except for a few things.</span>
-                                            </div>
-                                        </div>
-                                        <div class="message-item">
-                                            <div class="message-content">
-                                                <span>Now I will try to explain, the primari color is strongly out of the general composition, try to use flatter colors.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="message-info">
-                                        <div class="avatar avatar-sm">
-                                            <img src="assets/img/avatars/avatar-01.png" alt="Avatar">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-0">John Davis</h6>
-                                            <small class="text-body-secondary">9:26 PM <i class="fa-solid fa-check-double"></i>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Message 2 -->
+                                        <!-- Message 2 -->
+
+                                <?php endwhile;
+                                }
+                                ?>
+
+
                                 <!-- Separator -->
-                                <div class="separator">
+                                <!-- <div class="separator">
                                     <span class="separator-title fs-7 ls-1">Today</span>
-                                </div>
+                                </div> -->
                                 <!-- Separator -->
                                 <!-- Message 3 -->
-                                <div class="message">
+                                <!-- <div class="message">
                                     <div class="message-wrap">
                                         <div class="message-item">
                                             <div class="message-content">
@@ -286,95 +291,8 @@ function friendInfo()
                                             </small>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <!-- Message 3 -->
-                                <!-- Message 4 -->
-                                <div class="message self">
-                                    <div class="message-wrap">
-                                        <div class="message-item">
-                                            <div class="message-content">
-                                                <span>We combine recreation and sports, there are many ways to relax, you can join us at any time.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="message-info">
-                                        <div class="avatar avatar-sm">
-                                            <img src="assets/img/avatars/avatar-01.png" alt="Avatar">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-0">John Davis</h6>
-                                            <small class="text-body-secondary">9:42 PM <i class="fa-solid fa-check-double"></i>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Message 4 -->
-                                <!-- Message 5 -->
-                                <div class="message">
-                                    <div class="message-wrap">
-                                        <div class="message-item">
-                                            <div class="message-content">
-                                                <span>Great, I love outdoor activities, invite me for a company next time.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="message-info">
-                                        <div class="avatar avatar-sm">
-                                            <img src="assets/img/avatars/avatar-08.png" alt="Avatar">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-0">Ariel Martinez</h6>
-                                            <small class="text-body-secondary">9:46 PM <i class="fa-solid fa-check-double"></i>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Message 5 -->
-                                <!-- Message 6 -->
-                                <div class="message self">
-                                    <div class="message-wrap">
-                                        <div class="message-item">
-                                            <div class="message-content">
-                                                <span>Of course, Ariel, I will. Here is a photo report from the last meeting.</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="message-info">
-                                        <div class="avatar avatar-sm">
-                                            <img src="assets/img/avatars/avatar-01.png" alt="Avatar">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-0">John Davis</h6>
-                                            <small class="text-body-secondary">9:53 PM <i class="fa-solid fa-check-double"></i>
-                                            </small>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Message 6 -->
-                                <!-- Message 7 -->
-                                <div class="message">
-                                    <div class="message-wrap">
-                                        <div class="message-item">
-                                            <div class="message-content">
-                                                <div>Writing <div class="type-indicator">
-                                                        <span></span>
-                                                        <span></span>
-                                                        <span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="message-info">
-                                        <div class="avatar avatar-sm">
-                                            <img src="assets/img/avatars/avatar-08.png" alt="Avatar">
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-0">Ariel Martinez</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Message 7 -->
                             </div>
                         </div>
                         <!-- Messages -->
