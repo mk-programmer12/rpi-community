@@ -2,6 +2,7 @@
 session_start();
 require_once('connect.php');
 require_once('logger_info.php');
+auth();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!empty($_POST['friendId']) && !empty($_POST['message'])) {

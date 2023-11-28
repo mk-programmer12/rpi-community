@@ -2,6 +2,7 @@
 session_start();
 require_once('include/connect.php');
 require_once('include/logger_info.php');
+auth();
 $title = "Find Friends";
 require_once('header.php');
 

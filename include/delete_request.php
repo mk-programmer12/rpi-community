@@ -2,6 +2,7 @@
 session_start();
 require_once('connect.php');
 require_once('logger_info.php');
+auth();
 
 if(!empty($_REQUEST['id'])) {
     $deleteId = $_REQUEST['id'];

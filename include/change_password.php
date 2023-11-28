@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('connect.php');
+auth();
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         // check input field

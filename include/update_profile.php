@@ -2,6 +2,7 @@
 session_start();
 require_once('connect.php');
 require_once('logger_info.php');
+auth();
 $loggerPassword = $_SESSION['userPassword'];
 $designation = '';
 $about = '';

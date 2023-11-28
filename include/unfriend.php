@@ -2,6 +2,7 @@
 session_start();
 require_once('connect.php');
 require_once('logger_info.php');
+auth();
 // check request method
 if($_SERVER['REQUEST_METHOD'] === "POST") {
     if(!empty($_POST['rid']) && !empty($_POST['uid'])) {

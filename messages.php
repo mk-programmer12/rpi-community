@@ -32,8 +32,6 @@ function friendInfo()
 }
 
 ?>
-
-
 <!-- chat header start -->
 <div class="container-fluid">
     <div class="row">
@@ -115,7 +113,6 @@ function friendInfo()
 </div>
 <!-- chat header end -->
 
-
 <!-- Layout -->
 <div class="container-fluid">
     <div class="row">
@@ -152,10 +149,7 @@ function friendInfo()
                                             }
 
                                             $friendInfo = userInfo($connect, $oppId);
-
-
                                     ?>
-
                                             <!-- Chat Link 1 -->
                                             <li class="card contact-item mb-3 <?php if ($friendId === $oppId) {
                                                                                     echo 'active';
@@ -188,18 +182,9 @@ function friendInfo()
                                                 </div>
                                             </li>
                                             <!-- Chat Link 1 -->
-
-
                                     <?php endwhile;
                                     }
-
                                     ?>
-
-
-
-
-
-
                                 </ul>
                             </div>
                             <!-- Direct Chats Tab -->
@@ -221,15 +206,12 @@ function friendInfo()
                         <!-- Messages -->
                         <div class="message_wrapper h-100">
                             <div class="d-flex flex-column-reverse h-100 overflow-y-auto">
-
                                 <?php
                                 $getMessages = mysqli_query($connect, "SELECT * FROM `messages` WHERE (`sender_id`='$loggerId' && `receiver_id`='$friendId') || (`sender_id`='$friendId' && `receiver_id`='$loggerId') ORDER BY `id` DESC");
-
                                 if (mysqli_num_rows($getMessages) >= 1) {
                                     while ($messageRow = mysqli_fetch_array($getMessages)) : 
                                         $bothInfo = userInfo($connect, $messageRow['sender_id']);
                                     ?>
-                                        
                                         <!-- Message 2 -->
                                         <div class="message mt-4 <?php if($messageRow['sender_id'] === $loggerId) {echo "self"; } ?>">
                                             <div class="message-wrap">
@@ -260,7 +242,6 @@ function friendInfo()
                                 <?php endwhile;
                                 }
                                 ?>
-
 
                                 <!-- Separator -->
                                 <!-- <div class="separator">
