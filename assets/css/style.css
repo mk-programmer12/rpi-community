@@ -1135,5 +1135,19 @@ select.select option {
     box-shadow: 0 0 0 3px rgba(5, 143, 255, .25);
 }
 /*====================
-* 4. CHAT AREA CSS END 
+* 4. CHAT AREA CSS END
+====================*/
+
+
+
+/*====================
+* 4. FOOTER AREA CSS END
+====================*/
+.footer_copyright {
+    background: var(--title-color);
+}
+
+
+/*====================
+* 4. FOOTER AREA CSS END
 ====================*/

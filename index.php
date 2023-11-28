@@ -564,8 +564,11 @@ require_once('header.php');
 		<div class="footer_copyright">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6">
-						<p class="mb-0">Copyright © <a href="index.html">rpi-community</a> all rights reserved.</p>
+					<div class="col-md-12">
+						<p class="mb-0 text-center text-white py-4">
+							Copyright @ <a href="index.html">rpi-community</a> all rights reserved. <br>
+							Developed by <a href="http://www.facebook.com/mdmonirbdrangpur"> Monir Hossain</a> 8CMTB2
+					</p>
 					</div>
 					<div class="col-md-6"></div>
 				</div>
