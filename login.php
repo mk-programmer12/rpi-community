@@ -10,6 +10,9 @@ if(isset($_POST['login'])) {
         $checkValidUser = mysqli_query($connect, "select * from `student_info` where `roll`='$roll' && `password`='$password'");
         if(mysqli_num_rows($checkValidUser) === 1) {
             $_SESSION['userPassword'] = $password;
+            $isOnline = 1;
+            $onlineStatus = "Online";
+            $updateQuery = mysqli_query($connect, "UPDATE `student_info` SET `is_online`='$isOnline', `online_status`='$onlineStatus' WHERE `password`='$password'");
             header('location: profile.php');
         }else {
             echo "<script>alert('Invalid roll or password! Please try again.');window.open('login.php','_self');</script>";
