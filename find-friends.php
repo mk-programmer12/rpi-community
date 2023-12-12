@@ -66,7 +66,7 @@ require_once('header.php');
                                 <td><?php echo $row['s_department']; ?></td>
                                 <td>
                                     <a class="btn btn-primary btn-sm" href="include/add_friend.php?id=<?php echo $row['id']; ?>">Add friend</a>
-                                    <a class="btn btn-danger btn-sm" href="#">Remove</a>
+                                    <a class="btn btn-info btn-sm" href="user_profile.php?id=<?php echo $row['id']; ?>">Profile</a>
                                 </td>
                             </tr>
                         <?php }

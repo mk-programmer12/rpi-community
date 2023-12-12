@@ -1,1 +1,0 @@
-<h2>Friend Profile Route</h2>

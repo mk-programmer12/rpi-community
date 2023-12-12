@@ -7,12 +7,17 @@ $title = "Messages";
 $friendId = '';
 if (!empty($_REQUEST['id'])) {
     $friendId = $_REQUEST['id'];
-    if (checkFriendFunction($loggerId, $friendId) === 1) {
-        $getUser = userInfo($connect, $friendId);
-        $title = $getUser['name'] . "'s Message";
-    } else {
-        header("location: messages.php");
+    checkValidUser($friendId);
+    $getUser = userInfo($connect, $friendId);
+    $title = $getUser['name'] . "'s Message";
+
+    if (checkFriendFunction($loggerId, $friendId) !== 1) {
+        $checkConversion = mysqli_query($connect, "SELECT * FROM `conversion` WHERE (`sender_id`='$loggerId' && `receiver_id`='$friendId') || (`sender_id`='$friendId' && `receiver_id`='$loggerId')");
+        if(mysqli_num_rows($checkConversion) !== 1) {
+            header("location: messages.php");
+        }
     }
+
 }
 
 require_once('header.php');

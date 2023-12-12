@@ -35,13 +35,22 @@ function auth() {
 
 function checkFriendFunction($id1, $id2) {
 	global $connect;
-	$checkFriendQuery = mysqli_query($connect, "SELECT * FROM `friends` WHERE (`sender_id`='$id1' && `receiver_id`='$id2') ||(`sender_id`='$id2' && `receiver_id`='$id1') && `status`='accepted'");
+	$checkFriendQuery = mysqli_query($connect, "SELECT * FROM `friends` WHERE (`sender_id`='$id1' && `receiver_id`='$id2' && `status`='accepted') || (`sender_id`='$id2' && `receiver_id`='$id1' && `status`='accepted')");
 	if(mysqli_num_rows($checkFriendQuery) === 1) {
 		return 1;
 	}else {
 		return 0;
 	}
 }
+
+function checkValidUser ($userId) {
+	global $connect;
+	$checkQuery = mysqli_query($connect, "SELECT * FROM `student_info` WHERE `id`='$userId'");
+	if(mysqli_num_rows($checkQuery) !== 1) {
+		header("location: login.php");
+	}
+}
+
 
 
 
